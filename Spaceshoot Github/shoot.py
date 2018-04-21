@@ -2,7 +2,7 @@
 #Assets from -Kenny  (Credit "Kenney.nl" or "www.kenney.nl")
 #Added feature - Options Menu
 # added feature - Life Powerup
-
+# made by Jatin Jain
 import pygame
 import time
 import random
@@ -119,7 +119,7 @@ def OptionsMenu():
     screen.blit(bullet_img_3, (game_width/2, 260))
     screen.blit(bullet_img_4, (game_width/2+110, 260))
     draw_text(screen,"Choose background",25,game_width/2,350)
-    screen.blit(background_options_2, (game_width/2+110, 400))
+    screen.blit(background_options_2, (game_width/2+40, 400))
     screen.blit(background_options_3, (game_width/2-110, 400))
     pygame.display.flip()
 
@@ -133,7 +133,7 @@ def OptionsMenu():
         button(game_width/2, 260, 13, 57,bullet_img_3, 'bullet_img_3')
         button(game_width/2+110, 260, 13, 57,bullet_img_4, 'bullet_img_4')
 
-        button(game_width/2+110, 400, 80, 80,background_options_2, 'background_2')
+        button(game_width/2+40, 400, 80, 80,background_options_2, 'background_2')
         button(game_width/2-110, 400, 80, 80, background_options_3, 'background_3')
         clock.tick(fps)
         for event in pygame.event.get():
@@ -384,14 +384,7 @@ player_img_4 = pygame.image.load(os.path.join(img_path, "playerShip2_green.png")
 player_life_img_4 = pygame.transform.scale(player_img_4, (25, 19))
 player_life_img_4.set_colorkey(black)
 
-# if player_lifetype == 0:
-#     player_img = player_img
-# if player_lifetype == 1:
-#     player_img = player_img_2
-# if player_lifetype == 2:
-#     player_img = player_img_3
-# if player_lifetype == 3:
-#     player_img = player_img_4
+
 
 bullet_img = pygame.image.load(os.path.join(img_path,"laserRed16.png")).convert()
 bullet_img.set_colorkey(black)
@@ -419,6 +412,8 @@ background_options_3rect = background_options_3.get_rect()
 background_options_overlay = pygame.image.load(os.path.join(img_path, "Background_Options.png")).convert()
 background_options_overlay = pygame.transform.scale(background_options, (80, 80))
 
+
+
 meteor_shower =[]
 meteor_list =['meteorBrown_big3.png','meteorBrown_med1.png',
                'meteorBrown_med3.png','meteorBrown_small1.png','meteorBrown_small2.png',
@@ -433,6 +428,7 @@ powerup_img ={}
 powerup_img['shield'] =pygame.image.load(os.path.join(img_path,'shield_gold.png')).convert()
 powerup_img['gun'] =pygame.image.load(os.path.join(img_path,'bolt_gold.png')).convert()
 powerup_img['life'] = player_life_img
+
 for i in range(9):
     filename = 'regularExplosion0{}.png'.format(i)
     img =pygame.image.load(os.path.join(img_path,filename)).convert()
@@ -525,6 +521,14 @@ while running:
             game_over =True
 
     #Checking Poweups hitting the player
+    if player_lifetype == 0:
+        powerup_img['life'] = player_life_img
+    if player_lifetype == 1:
+        powerup_img['life'] = player_life_img_2
+    if player_lifetype == 2:
+        powerup_img['life'] = player_life_img_3
+    if player_lifetype == 3:
+        powerup_img['life'] = player_life_img_4
     hit_powerup =pygame.sprite.spritecollide(player,powerups,True)
     for hit in hit_powerup:
         if hit.type =='shield':
@@ -539,7 +543,14 @@ while running:
                 player.lives = 4
             
         #Draw
-        
+    if player_lifetype == 0:
+        player_life_img = player_life_img
+    if player_lifetype == 1:
+        player_life_img = player_life_img_2
+    if player_lifetype == 2:
+        player_life_img = player_life_img_3
+    if player_lifetype == 3:
+        player_life_img = player_life_img_4
     screen.fill(black)
     if background_type ==0:
         screen.blit(background,background_rect)
